@@ -28,6 +28,7 @@ type Router struct {
 	// travel
 	// loyalty
 	// bank
+	bank Commander
 	// subscription
 	// license
 	// insurance
@@ -63,6 +64,7 @@ func NewRouter(
 		// travel
 		// loyalty
 		// bank
+		bank: demo.NewDemoCommander(bot),
 		// subscription
 		// license
 		// insurance
@@ -123,7 +125,7 @@ func (c *Router) handleCallback(callback *tgbotapi.CallbackQuery) {
 	case "loyalty":
 		break
 	case "bank":
-		break
+		c.bank.HandleCallback(callback, callbackPath)
 	case "subscription":
 		break
 	case "license":
@@ -194,7 +196,7 @@ func (c *Router) handleMessage(msg *tgbotapi.Message) {
 	case "loyalty":
 		break
 	case "bank":
-		break
+		c.bank.HandleCommand(msg, commandPath)
 	case "subscription":
 		break
 	case "license":
