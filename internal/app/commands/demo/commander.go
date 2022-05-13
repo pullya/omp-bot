@@ -3,7 +3,7 @@ package demo
 import (
 	"log"
 
-	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
+	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"github.com/ozonmp/omp-bot/internal/app/commands/demo/subdomain"
 	"github.com/ozonmp/omp-bot/internal/app/path"
 )
