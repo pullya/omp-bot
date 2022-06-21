@@ -32,8 +32,8 @@ func (c *DemoCommander) HandleCallback(callback *tgbotapi.CallbackQuery, callbac
 	switch callbackPath.Subdomain {
 	case "subdomain":
 		c.subdomainCommander.HandleCallback(callback, callbackPath)
-	case "card":
-		c.subdomainCommander.HandleCallback(callback, callbackPath)
+		//	case "card":
+		//		c.subdomainCommander.HandleCallback(callback, callbackPath)
 	default:
 		log.Printf("DemoCommander.HandleCallback: unknown subdomain - %s", callbackPath.Subdomain)
 	}
@@ -43,8 +43,8 @@ func (c *DemoCommander) HandleCommand(msg *tgbotapi.Message, commandPath path.Co
 	switch commandPath.Subdomain {
 	case "subdomain":
 		c.subdomainCommander.HandleCommand(msg, commandPath)
-	case "card":
-		c.subdomainCommander.HandleCommand(msg, commandPath)
+		//	case "card":
+		//		c.subdomainCommander.HandleCommand(msg, commandPath)
 	default:
 		log.Printf("DemoCommander.HandleCommand: unknown subdomain - %s", commandPath.Subdomain)
 	}
