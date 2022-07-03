@@ -12,7 +12,7 @@ import (
 
 type Commander interface {
 	HandleCallback(callback *tgbotapi.CallbackQuery, callbackPath path.CallbackPath)
-	HandleCommand(callback *tgbotapi.Message, commandPath path.CommandPath)
+	HandleCommand(msg *tgbotapi.Message, commandPath path.CommandPath)
 }
 
 type Router struct {

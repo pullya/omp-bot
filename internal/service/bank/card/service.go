@@ -34,6 +34,6 @@ func (d *DummyCardService) Update(cardID uint64, card bank.Card) error {
 	return nil
 }
 
-func (d *DummyCardService) Remove(cardID uint64, card bank.Card) (bool, error) {
+func (d *DummyCardService) Remove(cardID uint64) (bool, error) {
 	return true, nil
 }

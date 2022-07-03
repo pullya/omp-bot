@@ -14,24 +14,23 @@ type Commander interface {
 }
 
 type BankCommander struct {
-	bot                *tgbotapi.BotAPI
-	subdomainCommander Commander
+	bot           *tgbotapi.BotAPI
+	cardCommander Commander
 }
 
 func NewBankCommander(
 	bot *tgbotapi.BotAPI,
 ) *BankCommander {
 	return &BankCommander{
-		bot: bot,
-		// subdomainCommander
-		subdomainCommander: card.NewBankCardCommander(bot),
+		bot:           bot,
+		cardCommander: card.NewBankCardCommander(bot),
 	}
 }
 
 func (c *BankCommander) HandleCallback(callback *tgbotapi.CallbackQuery, callbackPath path.CallbackPath) {
 	switch callbackPath.Subdomain {
 	case "card":
-		c.subdomainCommander.HandleCallback(callback, callbackPath)
+		c.cardCommander.HandleCallback(callback, callbackPath)
 	default:
 		log.Printf("BankCommander.HandleCallback: unknown subdomain - %s", callbackPath.Subdomain)
 	}
@@ -40,7 +39,7 @@ func (c *BankCommander) HandleCallback(callback *tgbotapi.CallbackQuery, callbac
 func (c *BankCommander) HandleCommand(msg *tgbotapi.Message, commandPath path.CommandPath) {
 	switch commandPath.Subdomain {
 	case "card":
-		c.subdomainCommander.HandleCommand(msg, commandPath)
+		c.cardCommander.HandleCommand(msg, commandPath)
 	default:
 		log.Printf("BankCommander.HandleCommand: unknown subdomain - %s", commandPath.Subdomain)
 	}
