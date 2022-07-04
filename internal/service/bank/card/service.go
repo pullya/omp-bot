@@ -23,7 +23,17 @@ func (d *DummyCardService) Describe(cardId uint64) (*bank.Card, error) {
 }
 
 func (d *DummyCardService) List(cursor uint64, limit uint64) ([]bank.Card, error) {
-	return bank.AllCards, nil
+	rlen := 0
+	if len(bank.AllCards) >= int(cursor+limit) {
+		rlen = int(limit)
+	} else {
+		rlen = len(bank.AllCards) - int(cursor+limit)
+	}
+	res := make([]bank.Card, rlen)
+	for i := 0; i < rlen; i++ {
+		res[i] = bank.AllCards[int(cursor)+i]
+	}
+	return res, nil
 }
 
 func (d *DummyCardService) Create(bank.Card) (int, error) {

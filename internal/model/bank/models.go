@@ -7,7 +7,7 @@ type Card struct {
 var AllCards = []Card{
 	{Title: "debet"},
 	{Title: "credit"},
-	{Title: "unempossed"},
+	{Title: "unembossed"},
 	{Title: "virtual"},
 	{Title: "cash"},
 	{Title: "token"},
