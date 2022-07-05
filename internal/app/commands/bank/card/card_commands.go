@@ -53,8 +53,11 @@ func (c *cardCommander) Get(inputMsg *tgbotapi.Message) {
 
 func (c *cardCommander) List(inputMsg *tgbotapi.Message) {
 	outputMessage := "Here all card types:"
+	cur := 0
+	lim := uint64(5)
+	curI := 0
 
-	products, err := c.sservice.List(0, 3)
+	products, err := c.sservice.List(uint64(cur), uint64(lim))
 	if err != nil {
 		log.Println("smthg went wrong")
 		return
@@ -62,13 +65,15 @@ func (c *cardCommander) List(inputMsg *tgbotapi.Message) {
 
 	for i := range products {
 		outputMessage += "\n" + products[i].Title
+		log.Printf("listing cur i: %v", curI)
+		curI++
 	}
 
 	msg := tgbotapi.NewMessage(inputMsg.Chat.ID,
 		outputMessage,
 	)
 	serializedData, _ := json.Marshal(CallbackListData{
-		Offset: 19,
+		Offset: curI,
 	})
 
 	callbackPath := path.CallbackPath{

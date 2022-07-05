@@ -1,6 +1,8 @@
 package card
 
 import (
+	"log"
+
 	bank "github.com/ozonmp/omp-bot/internal/model/bank"
 )
 
@@ -24,11 +26,17 @@ func (d *DummyCardService) Describe(cardId uint64) (*bank.Card, error) {
 
 func (d *DummyCardService) List(cursor uint64, limit uint64) ([]bank.Card, error) {
 	rlen := 0
+	if cursor >= uint64(len(bank.AllCards)) {
+		cursor = 0
+	}
+
 	if len(bank.AllCards) >= int(cursor+limit) {
 		rlen = int(limit)
 	} else {
-		rlen = len(bank.AllCards) - int(cursor+limit)
+		rlen = int(cursor+limit) - len(bank.AllCards) + 1
 	}
+	log.Printf("rlen: %v", rlen)
+
 	res := make([]bank.Card, rlen)
 	for i := 0; i < rlen; i++ {
 		res[i] = bank.AllCards[int(cursor)+i]
