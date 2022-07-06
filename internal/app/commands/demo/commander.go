@@ -3,7 +3,7 @@ package demo
 import (
 	"log"
 
-	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
+	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"github.com/ozonmp/omp-bot/internal/app/commands/demo/subdomain"
 	"github.com/ozonmp/omp-bot/internal/app/path"
 )
@@ -32,6 +32,8 @@ func (c *DemoCommander) HandleCallback(callback *tgbotapi.CallbackQuery, callbac
 	switch callbackPath.Subdomain {
 	case "subdomain":
 		c.subdomainCommander.HandleCallback(callback, callbackPath)
+		//	case "card":
+		//		c.subdomainCommander.HandleCallback(callback, callbackPath)
 	default:
 		log.Printf("DemoCommander.HandleCallback: unknown subdomain - %s", callbackPath.Subdomain)
 	}
@@ -41,6 +43,8 @@ func (c *DemoCommander) HandleCommand(msg *tgbotapi.Message, commandPath path.Co
 	switch commandPath.Subdomain {
 	case "subdomain":
 		c.subdomainCommander.HandleCommand(msg, commandPath)
+		//	case "card":
+		//		c.subdomainCommander.HandleCommand(msg, commandPath)
 	default:
 		log.Printf("DemoCommander.HandleCommand: unknown subdomain - %s", commandPath.Subdomain)
 	}
