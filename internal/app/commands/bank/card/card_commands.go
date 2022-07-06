@@ -96,13 +96,26 @@ func (c *cardCommander) List(inputMsg *tgbotapi.Message) {
 }
 
 func (c *cardCommander) Delete(inputMsg *tgbotapi.Message) {
-	msg := tgbotapi.NewMessage(inputMsg.Chat.ID,
-		"Delete command service",
-	)
+	args := inputMsg.CommandArguments()
 
-	_, err := c.bot.Send(msg)
+	idx, err := strconv.ParseUint(args, 10, 64)
 	if err != nil {
-		log.Printf("BankCardCommander.Delete: error sending reply message to chat - %v", err)
+		log.Println("wrong args", args)
+		return
+	}
+
+	_, err = c.sservice.Remove(idx)
+	if err != nil {
+		log.Println("Error while removing entity", idx)
+	} else {
+		msg := tgbotapi.NewMessage(inputMsg.Chat.ID,
+			"Card deleted",
+		)
+
+		_, err = c.bot.Send(msg)
+		if err != nil {
+			log.Printf("BankCardCommander.Delete: error sending reply message to chat - %v", err)
+		}
 	}
 }
 
